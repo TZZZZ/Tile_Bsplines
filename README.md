@@ -1,8 +1,8 @@
 # Tile_Bsplines
 
-The detailed explanation is in \textit{introduction.pdf}. 
+The detailed explanation is in introduction.pdf. 
 
-In this repository we construct a new family of multivariate B-splines, corresponding wavelet systems, and subdivision schemes. We define B-spline as an autoconvolution of the characteristic function of a special compact set $G$ called ``tile''. A tile is a compact subset $G$ of $R^d$ possessing two properties: $G$ is self similar by  means of several contraction affine mappings with the same linear part, i.e. $G = \bigcup \limits_{k} M^{-1}(G + d_k)$;  $G$ defines a tiling of $R^d$, i.e., its  integer shifts cover entire space in one layer (their intersections are of Lebesgue measure zero). 
+In this repository we construct a new family of multivariate B-splines, corresponding wavelet systems, and subdivision schemes. We define B-spline as an autoconvolution of the characteristic function of a special compact set ![](https://latex.codecogs.com/gif.latex?G) called ``tile''. A tile is a compact subset ![](https://latex.codecogs.com/gif.latex?G) of $R^d$ possessing two properties: ![](https://latex.codecogs.com/gif.latex?G) is self similar by  means of several contraction affine mappings with the same linear part, i.e. ![](https://latex.codecogs.com/gif.latex?G&space;=&space;\bigcup&space;\limits_{k}&space;M^{-1}(G&space;&plus;&space;d_k);  $G$ defines a tiling of ![](https://latex.codecogs.com/gif.latex?\mathbb{R}^d), i.e., its  integer shifts cover entire space in one layer (their intersections are of Lebesgue measure zero). 
 The B-spline $B(G, n)$ is defined as ![](https://latex.codecogs.com/gif.latex?\chi(G)&space;*&space;\cdots&space;*&space;\chi(G)), 
 where $\chi(G)[x] = 1$ if $x \in G$ and $\chi(G)[x] = 0$ otherwise. 
 
@@ -22,22 +22,24 @@ The structure of the repository:
 The code was tested only for 2-tiles. 
 
 More about tiles, multivariate subdivision algorithms and Haar systems: 
-J. Lagarias, Y. Wang, Integral self-affine tiles in R^n. II. Lattice tilings, J. Fourier
+
+- J. Lagarias, Y. Wang, Integral self-affine tiles in R^n. II. Lattice tilings, J. Fourier
 Anal. Appl. 3 (1997), no. 1, 83 -- 102. 
 
-K. Grochenig, W.R. Madych, Multiresolution analysis, Haar bases, and self-similar
+- K. Grochenig, W.R. Madych, Multiresolution analysis, Haar bases, and self-similar
 tilings of R^n, IEEE Trans. Inform. Theory 38 (1992), no. 2, 556 -- 568. 
 
-K. Grochenig, A. Haas, Self-similar lattice tilings, J. Fourier Anal. Appl., 1 (1994), no.
+- K. Grochenig, A. Haas, Self-similar lattice tilings, J. Fourier Anal. Appl., 1 (1994), no.
 2, 131 -- 170. 
 
 
 
 
 More about Holder regularity: 
-M. Charina, V.Yu. Protasov, Regularity of anisotropic refinable functions, Appl. Comput.
+
+- M. Charina, V.Yu. Protasov, Regularity of anisotropic refinable functions, Appl. Comput.
 Harmon. Anal., 47 (2019), no. 3, 795 -- 821. 
 
-V.Yu. Protasov, The generalized spectral radius. A geometric approach, Izvestiya
+- V.Yu. Protasov, The generalized spectral radius. A geometric approach, Izvestiya
 Math., 61 (1997), 995 -- 1030.
 
