@@ -3,7 +3,7 @@
 The detailed explanation is in \textit{introduction.pdf}. 
 
 In this repository we construct a new family of multivariate B-splines, corresponding wavelet systems, and subdivision schemes. We define B-spline as an autoconvolution of the characteristic function of a special compact set $G$ called ``tile''. A tile is a compact subset $G$ of $R^d$ possessing two properties: $G$ is self similar by  means of several contraction affine mappings with the same linear part, i.e. $G = \bigcup \limits_{k} M^{-1}(G + d_k)$;  $G$ defines a tiling of $R^d$, i.e., its  integer shifts cover entire space in one layer (their intersections are of Lebesgue measure zero). 
-The B-spline $B(G, n)$ is defined as ![$\chi(G) * \сdots * \chi(G)$](https://latex.codecogs.com/gif.latex?\chi(G)&space;*&space;\cdots&space;*&space;\chi(G), 
+The B-spline $B(G, n)$ is defined as ![](https://latex.codecogs.com/gif.latex?\chi(G)&space;*&space;\cdots&space;*&space;\chi(G)), 
 where $\chi(G)[x] = 1$ if $x \in G$ and $\chi(G)[x] = 0$ otherwise. 
 
 The most popular and the most practically useful are 2-tiles, which are defined by two affine contractions. On the two-dimensional plane \mathbb{R}^2,  there are exactly three tiles, up to affine similarity. They are  called  "square" (this is a real square), "dragon", and "bear" (also known as "twindragon" or  "tame twindragon"). We call corresponding B-splines Bear-k (convolution of k Bears) and similarly with the square and with the dragon. The 2-tiles can be constructed in arbitrary dimension. The Square-k is the classical B-spline, which is a direct product of $d$ univariate splines. This is a piecewise-polynomial function, but Dragon-k and  Bear-k are neither piecewise-polynomial nor piecewise analytic. 
