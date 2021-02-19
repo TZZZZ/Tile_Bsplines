@@ -10,10 +10,10 @@ class RefinEq():
     '''Defines refinement equation (RE)
     f(x) = c_0 f(Mx - d_0) + c_1 f(Mx - d_1) + ... + c_k f(Mx - d_k)
     Params:
-    M     -- expanding integer matrix, scaling
+    M     -- an expanding integer matrix, scaling parameter
     coef  -- list of coefficients [c_0, ..., c_k]
     digs  -- list of shift vectors [d_0, ..., d_k]
-    tile  -- tile corresponding to this refinement equation (class Tile)
+    tile  -- the tile corresponding to this refinement equation (class Tile)
     listT -- transition matrices
     Omega -- minimal set such that the support of solution is a subset of tile + Omega
     N     -- len(Omega)
@@ -46,7 +46,7 @@ class RefinEq():
 
     def add_Omega(self):
         '''finds minimal Omega. requires digs != tile.digs
-        implementation of the algorithm by T. Meystrick'''
+        the implementation of the algorithm by T. Meystrick'''
         if self.tile is None:
             self.add_tile()
         self.Omega = np.array([[0, 0]])
@@ -92,7 +92,7 @@ class RefinEq():
             self.listT.append(T)
 
     def add_solution(self, acc=8):
-        '''finds solution of refinement equation with given accuracy
+        '''finds solution of the refinement equation with a given accuracy.
         in case of many digits only x,y,z-values are supported'''
         if self.Omega is None:
             self.add_Omega()
@@ -133,7 +133,7 @@ class RefinEq():
         self.reff = Refin_Func(dic, acc, xx, yy, zz)
 
     def add_solution_manydigs(self, acc=8):
-        '''utility finction. finds solution in simple form as lists with x,y,z-values'''
+        '''utility finction. finds the solution in a simple form as lists with x,y,z-values'''
         if self.listT is None:
             self.add_listT()
         xx = []
@@ -174,17 +174,17 @@ class RefinEq():
         plt.show()
 
     def norm_l2(self):
-        '''Normalizes solution using numerical integration'''
+        '''Normalizes the solution using numerical integration'''
         if self.reff is None:
             self.add_solution()
         self.reff.zz /= np.sqrt(sum(self.reff.zz**2)/(len(self.listT) ** self.reff.acc))
 
     def change_signs(self):
-        '''changes signs of vectors of RE'''
+        '''changes the signs of vectors of RE'''
         return RefinEq(self.M, self.coef, -self.digs)
 
     def mask(self, xx, yy):
-        '''finds mask of RE'''
+        '''finds the mask of RE'''
         res = 0
         for i in range(len(self.digs)):
             k = self.digs[i][0]
@@ -194,7 +194,7 @@ class RefinEq():
         return res / self.m
 
     def Phi(self, xx, yy):
-        '''utility periodization for construction of wavelet function'''
+        '''utility periodization for the construction of the wavelet function'''
         sp4 = self.RE_convolution(self.change_signs())
         sp4.add_listT()
         T0 = sp4.listT[0]
@@ -220,7 +220,7 @@ class RefinEq():
         return (1 / np.sqrt(np.float64(rr)))
 
     def orthogonalized_mask(self, xx, yy):
-        '''orthogonalizes mask'''
+        '''orthogonalizes the mask'''
         Phi1 = self.Phi(xx, yy)
         xx1 = self.M.T[0][0] * xx + self.M.T[0][1] * yy
         yy1 = self.M.T[1][0] * xx + self.M.T[1][1] * yy
@@ -229,7 +229,7 @@ class RefinEq():
         return mas * np.sqrt(Phi1) / np.sqrt(Phi2)
 
     def RE_convolution(self, ref2):
-        '''implements convolution of refinement equation'''
+        '''implements the convolution of refinement equation'''
         if np.linalg.norm(self.M.ravel() - ref2.M.ravel()) > 1e-8:
             raise ValueError("Impossible to convolve two RE with different matrices")
         dic = {}
@@ -268,7 +268,7 @@ class RefinEq():
         return list_A
 
     def calc_by_kron(self, list_A):
-        '''Kronecker product's approach for joint spectral radius calculation'''
+        '''The Kronecker product approach for the joint spectral radius calculation'''
         list_kron = []
         for mA in list_A:
             list_kron.append(np.kron(mA, mA))
@@ -298,7 +298,7 @@ class RefinEq():
 
 
 class Tile(RefinEq):
-    '''Defines Tile with refinement equation
+    '''Defines Tile with the refinement equation
     chi_G(x) = chi_G(Mx - d_0) + chi_G(Mx - d_1) + ... + chi_G(Mx - d_m), m = |det M|
     Can be defined as constructor(matrix, digits) or constructor(name),
     where name = dragon, bear or rectangle (possible tiles with 2 digits)'''
@@ -315,7 +315,7 @@ class Tile(RefinEq):
                 super().__init__(np.array([[0, -2], [1, 0]]), np.ones(2), np.array([[0, 0], [1, 0]]))
 
     def check_digits(self):
-        '''checks that digits in tile are from different classes Z^2 / MZ^2'''
+        '''Checks that the digits in tile are from different quotient classes Z^2 / MZ^2'''
         for dig1 in self.digs:
             for dig2 in self.digs:
                 diff = dig2 - dig1
@@ -350,7 +350,7 @@ class Bspline(RefinEq):
             self.add_tile(btile.digs)
 
     def generate_basis(self):
-        '''generates a special basis for transition matrices'''
+        '''generates a special basis for the transition matrices'''
         nn = self.num_conv
         if self.typ != 'symm':
             nn *= 2
@@ -363,7 +363,7 @@ class Bspline(RefinEq):
         return basis
 
     def in_basis(self, vect, basold, bas, columns):
-        '''represents vector from one basis in another reducing dimension'''
+        '''represents a vector in some basis of a subspace'''
         nn = len(bas[0])
         short = []
         for col in columns:
@@ -393,7 +393,7 @@ class Bspline(RefinEq):
         return True
 
     def find_orthogonal_bas(self, basis):
-        '''adds vectors until basis is full'''
+        '''adds vectors until basis is complete'''
         num = len(basis[0])
         j = 0
         while len(basis) < num:
@@ -406,7 +406,7 @@ class Bspline(RefinEq):
         return basis
 
     def smoothness(self):
-        '''Calculates Holder exponent for B-splines'''
+        '''Calculates the Holder exponent for B-splines'''
         basold = self.generate_basis()
         cou = int(self.num_conv * (self.num_conv + 1) * 0.5)
         bas = []
@@ -446,10 +446,10 @@ class Bspline(RefinEq):
 
 
 class Refin_Func():
-    '''Defines refinement function on the union of several tiles.
+    '''Defines a refinable function on the union of several tiles.
     Values are stored in consecutive blocks with the length = blocklen.
-    Shifts are defined by dictionary dic = {shift: number of block}
-    The structure in block corresponds to M-nary system'''
+    Shifts are defined by the dictionary dic = {shift: number of block}
+    The structure in each block corresponds to the M-nary system'''
     def __init__(self, diction=None, accur=None, x=None, y=None, z=None):
         self.dic = diction
         self.acc = accur
@@ -459,7 +459,7 @@ class Refin_Func():
         self.zz = z
 
     def draw(self):
-        '''Plots the values of function'''
+        '''Plots the values of the function'''
         fig = plt.figure()
         ax = fig.gca(projection='3d')
         ax.view_init(elev=10, azim=130)
@@ -477,7 +477,7 @@ class Refin_Func():
         return Refin_Func(self.dic, self.acc, self.xx, self.yy, shifted_zz)
 
     def linear_combination(self, nonzero):
-        '''Calculates linear combination sum c_k f(x - shift_k) defined by nonzero
+        '''Calculates the linear combination sum c_k f(x - shift_k) defined by nonzero
         nonzero -- dictionary {shift: coeff}'''
         dic1 = self.dic.copy()
         if self.dic[0, 0] != 0:
@@ -506,7 +506,7 @@ class Refin_Func():
         return Refin_Func(dic1, self.acc, newxx, newyy, newzz)
 
     def cut_zeros(self, eps=1e-2):
-        '''Reduces number of points by deleting blocks with values less than eps '''
+        '''Reduces the number of points by deleting blocks with values less than eps '''
         strxx = np.array([])
         stryy = np.array([])
         strzz = np.array([])
@@ -522,7 +522,7 @@ class Refin_Func():
         return Refin_Func(dic1, self.acc, strxx, stryy, strzz)
 
     def wavelet_func(self, nonzero1, req, formula_shift=[0, 1]):
-        '''calculates wavelet function for 2-digit B-splines'''
+        '''calculates the wavelet function for a 2-digit B-spline'''
         cur_length = len(self.dic)
         dic1 = self.dic.copy()
         wavexx = self.xx.copy()
@@ -572,7 +572,7 @@ class Refin_Func():
         return Refin_Func(dic1, self.acc, wavexx, waveyy, wavezz)
 
     def scalar(self, reff):
-        '''calculates numerically scalar product of two refinement functions'''
+        '''calculates numerically the scalar product of two refinement functions'''
         return sum(self.zz * reff.zz) / self.blocklen
 
 
